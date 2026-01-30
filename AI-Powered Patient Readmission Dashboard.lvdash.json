@@ -1,0 +1,1103 @@
+{
+  "datasets": [
+    {
+      "name": "e0067d67",
+      "displayName": "Patient Readmission Status Overview",
+      "queryLines": [
+        "SELECT\r\n",
+        "  CASE \r\n",
+        "    WHEN readmit_30d = 1 THEN 'Readmitted'\r\n",
+        "    ELSE 'Not Readmitted'\r\n",
+        "  END AS readmit_status\r\n",
+        "FROM gold_patient_features;"
+      ],
+      "catalog": "workspace",
+      "schema": "default"
+    },
+    {
+      "name": "ae948946",
+      "displayName": "gold_patient_features",
+      "queryLines": [
+        "SELECT * FROM workspace.default.gold_patient_features"
+      ]
+    },
+    {
+      "name": "1daadd13",
+      "displayName": "gold_patient_features",
+      "queryLines": [
+        "SELECT * FROM workspace.default.gold_patient_features"
+      ]
+    },
+    {
+      "name": "cf16186c",
+      "displayName": "patient_risk_ai",
+      "queryLines": [
+        "SELECT\r\n",
+        "  CASE\r\n",
+        "    WHEN utilization_score >= 8 OR readmit_30d = 1 THEN 'High Risk'\r\n",
+        "    WHEN utilization_score BETWEEN 5 AND 7 THEN 'Medium Risk'\r\n",
+        "    ELSE 'Low Risk'\r\n",
+        "  END AS ai_risk_bucket,\r\n",
+        "\r\n",
+        "  COUNT(*) AS total_patients,\r\n",
+        "  ROUND(AVG(readmit_30d), 3) AS readmission_rate\r\n",
+        "\r\n",
+        "FROM gold_patient_features\r\n",
+        "\r\n",
+        "GROUP BY\r\n",
+        "  CASE\r\n",
+        "    WHEN utilization_score >= 8 OR readmit_30d = 1 THEN 'High Risk'\r\n",
+        "    WHEN utilization_score BETWEEN 5 AND 7 THEN 'Medium Risk'\r\n",
+        "    ELSE 'Low Risk'\r\n",
+        "  END\r\n",
+        "\r\n",
+        "ORDER BY readmission_rate DESC;"
+      ],
+      "catalog": "workspace",
+      "schema": "default"
+    },
+    {
+      "name": "a8b396c8",
+      "displayName": "gold_patient_features",
+      "queryLines": [
+        "SELECT * FROM workspace.default.gold_patient_features"
+      ],
+      "catalog": "workspace",
+      "schema": "default"
+    }
+  ],
+  "pages": [
+    {
+      "name": "a9e359a3",
+      "displayName": "Global Filters",
+      "layout": [
+        {
+          "widget": {
+            "name": "a316cd27",
+            "spec": {
+              "version": 2,
+              "widgetType": "filter-single-select",
+              "encodings": {},
+              "frame": {
+                "showTitle": true
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 2
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_GLOBAL_FILTERS"
+    },
+    {
+      "name": "3807a05a",
+      "displayName": "30 Days Readmission Analysis",
+      "layout": [
+        {
+          "widget": {
+            "name": "30-day-patient-readmission-status",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "e0067d67",
+                  "fields": [
+                    {
+                      "name": "readmit_status",
+                      "expression": "`readmit_status`"
+                    },
+                    {
+                      "name": "count(*)",
+                      "expression": "COUNT(`*`)"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "`readmit_status` IN (`readmit_status`) OR TRUE"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "readmit_status",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "count(*)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "readmit_status",
+                  "scale": {
+                    "type": "categorical",
+                    "mappings": [
+                      {
+                        "value": "Not Readmitted",
+                        "color": "#01FFAC"
+                      },
+                      {
+                        "value": "Readmitted",
+                        "color": "#991406"
+                      }
+                    ]
+                  }
+                },
+                "label": {
+                  "show": true,
+                  "text": {
+                    "fieldName": "count(*)"
+                  }
+                },
+                "extra": [
+                  {
+                    "fieldName": "readmit_status"
+                  },
+                  {
+                    "fieldName": "count(*)"
+                  }
+                ]
+              },
+              "frame": {
+                "showTitle": true,
+                "showDescription": true,
+                "title": "30-Day Patient Readmission Status",
+                "description": "This chart shows the number of patients who were readmitted versus not readmitted within 30 days of discharge.",
+                "headerAlignment": "center"
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "dark": "#A50808"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 8
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    },
+    {
+      "name": "ececaa44",
+      "displayName": "Utilization & Risk Drivers",
+      "layout": [
+        {
+          "widget": {
+            "name": "d80a141e",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ae948946",
+                  "fields": [
+                    {
+                      "name": "avg(readmit_30d)",
+                      "expression": "AVG(`readmit_30d`)"
+                    },
+                    {
+                      "name": "sum(utilization_score)",
+                      "expression": "SUM(`utilization_score`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "sum(utilization_score)",
+                  "axis": {
+                    "title": "Total Utilization Score",
+                    "labelAngle": 0
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "avg(readmit_30d)",
+                  "format": {
+                    "type": "number-percent",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 2
+                    }
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "extra": [
+                  {
+                    "fieldName": "avg(readmit_30d)"
+                  },
+                  {
+                    "fieldName": "sum(utilization_score)"
+                  }
+                ]
+              },
+              "frame": {
+                "showTitle": true,
+                "showDescription": true,
+                "headerAlignment": "center",
+                "description": "Readmission Rate vs Patient Utilization"
+              },
+              "mark": {
+                "colors": [
+                  "#2B2DB0",
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "dark": "#9906A8"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 8
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    },
+    {
+      "name": "d3254580",
+      "displayName": "Patient Segmentation",
+      "layout": [
+        {
+          "widget": {
+            "name": "readmission-risk-by-age-group",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ae948946",
+                  "fields": [
+                    {
+                      "name": "sum(readmit_30d)",
+                      "expression": "SUM(`readmit_30d`)"
+                    },
+                    {
+                      "name": "age",
+                      "expression": "`age`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "age",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(readmit_30d)",
+                  "format": {
+                    "type": "number-percent",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 2
+                    }
+                  },
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "label": {
+                  "show": true,
+                  "text": {
+                    "fieldName": "sum(readmit_30d)"
+                  }
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "headerAlignment": "center",
+                "title": "Readmission Risk by Age Group"
+              },
+              "mark": {
+                "colors": [
+                  "#3B82F6",
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "dark": "#076DC2"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 3,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "impact-diabetes-readmission-risk",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ae948946",
+                  "fields": [
+                    {
+                      "name": "sum(readmit_30d)",
+                      "expression": "SUM(`readmit_30d`)"
+                    },
+                    {
+                      "name": "diabetesMed",
+                      "expression": "`diabetesMed`"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "diabetesMed",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "natural-order"
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(readmit_30d)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "label": {
+                  "show": true,
+                  "text": {
+                    "fieldName": "sum(readmit_30d)"
+                  }
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "headerAlignment": "center",
+                "title": "Impact of Diabetes on Readmission Risk"
+              },
+              "mark": {
+                "colors": [
+                  "#8B5CF6",
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "dark": "#1374C6"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 0,
+            "width": 3,
+            "height": 5
+          }
+        },
+        {
+          "widget": {
+            "name": "readmission-risk-hospital-utilization",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ae948946",
+                  "fields": [
+                    {
+                      "name": "sum(readmit_30d)",
+                      "expression": "SUM(`readmit_30d`)"
+                    },
+                    {
+                      "name": "sum(utilization_score)",
+                      "expression": "SUM(`utilization_score`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "sum(utilization_score)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(readmit_30d)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "label": {
+                  "show": true,
+                  "text": {
+                    "fieldName": "sum(readmit_30d)"
+                  }
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "headerAlignment": "center",
+                "title": "Readmission Risk  by Hospital Utilization"
+              },
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "dark": "#400CF1"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 5,
+            "width": 3,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "overall-readmission-risk-level",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ae948946",
+                  "fields": [
+                    {
+                      "name": "avg(readmit_30d)",
+                      "expression": "AVG(`readmit_30d`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "y": {
+                  "fieldName": "avg(readmit_30d)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "headerAlignment": "center",
+                "title": "Overall Readmission Risk Level"
+              },
+              "mark": {
+                "colors": [
+                  "#EF4444",
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              }
+            },
+            "specExtensions": {
+              "widgetBorderColor": {
+                "dark": "#1C1311"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 5,
+            "width": 3,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    },
+    {
+      "name": "68cac12b",
+      "displayName": "AI Risk Prioritization",
+      "layout": [
+        {
+          "widget": {
+            "name": "ai-based-patient-risk-distribution",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "cf16186c",
+                  "fields": [
+                    {
+                      "name": "ai_risk_bucket",
+                      "expression": "`ai_risk_bucket`"
+                    },
+                    {
+                      "name": "countdistinct(ai_risk_bucket)",
+                      "expression": "COUNT(DISTINCT `ai_risk_bucket`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "ai_risk_bucket",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "countdistinct(ai_risk_bucket)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "ai_risk_bucket",
+                  "scale": {
+                    "type": "categorical",
+                    "mappings": [
+                      {
+                        "value": "High Risk",
+                        "color": "#FF2144"
+                      },
+                      {
+                        "value": "Low Risk",
+                        "color": {
+                          "themeColorType": "visualizationColors",
+                          "position": 3
+                        }
+                      },
+                      {
+                        "value": "Medium Risk",
+                        "color": {
+                          "themeColorType": "visualizationColors",
+                          "position": 4
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "headerAlignment": "center",
+                "title": "AI-Based Patient Risk Distribution "
+              },
+              "mark": {
+                "colors": [
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 2
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 3
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 4
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 5
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 6
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 7
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 8
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 9
+                  },
+                  {
+                    "themeColorType": "visualizationColors",
+                    "position": 10
+                  }
+                ]
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 3,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "ai-risk-vs-actual-readmission",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "a8b396c8",
+                  "fields": [
+                    {
+                      "name": "countdistinct(risk_bucket)",
+                      "expression": "COUNT(DISTINCT `risk_bucket`)"
+                    },
+                    {
+                      "name": "avg(readmit_30d)",
+                      "expression": "AVG(`readmit_30d`)"
+                    },
+                    {
+                      "name": "utilization_score",
+                      "expression": "`utilization_score`"
+                    },
+                    {
+                      "name": "count(*)",
+                      "expression": "COUNT(`*`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "utilization_score",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "count(*)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "fieldName": "countdistinct(risk_bucket)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "label": {
+                  "show": true,
+                  "text": {
+                    "fieldName": "avg(readmit_30d)",
+                    "format": {
+                      "type": "number-percent",
+                      "decimalPlaces": {
+                        "type": "max",
+                        "places": 2
+                      }
+                    }
+                  }
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "headerAlignment": "center",
+                "title": "AI_Risk vs Actual Readmission"
+              }
+            }
+          },
+          "position": {
+            "x": 3,
+            "y": 0,
+            "width": 3,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "hospital-utilization-by-ai-risk-level",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "cf16186c",
+                  "fields": [
+                    {
+                      "name": "total_patients",
+                      "expression": "`total_patients`"
+                    },
+                    {
+                      "name": "sum(total_patients)",
+                      "expression": "SUM(`total_patients`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "total_patients",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(total_patients)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "headerAlignment": "center",
+                "title": "Hospital Utilization by AI Risk Level",
+                "showDescription": false
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 6,
+            "width": 6,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    },
+    {
+      "name": "d676f9cc",
+      "displayName": "Executive KPI Summary",
+      "layout": [
+        {
+          "widget": {
+            "name": "high-risk-patients-needing-immediate-care",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "1daadd13",
+                  "fields": [
+                    {
+                      "name": "readmit_30d",
+                      "expression": "`readmit_30d`"
+                    }
+                  ],
+                  "cubeGroupingSets": {
+                    "sets": [
+                      {
+                        "fieldNames": [
+                          "readmit_30d"
+                        ]
+                      },
+                      {
+                        "fieldNames": [
+                          "readmit_30d"
+                        ]
+                      }
+                    ]
+                  },
+                  "disaggregated": false,
+                  "orders": [
+                    {
+                      "direction": "ASC",
+                      "expression": "`readmit_30d`"
+                    },
+                    {
+                      "direction": "ASC",
+                      "expression": "`readmit_30d`"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "pivot",
+              "encodings": {
+                "rows": [
+                  {
+                    "fieldName": "readmit_30d"
+                  }
+                ],
+                "columns": [
+                  {
+                    "fieldName": "readmit_30d"
+                  }
+                ]
+              },
+              "frame": {
+                "showTitle": true,
+                "headerAlignment": "center",
+                "title": "High-Risk Patients Needing Immediate Care"
+              }
+            }
+          },
+          "position": {
+            "x": 2,
+            "y": 0,
+            "width": 2,
+            "height": 3
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    },
+    "applyModeEnabled": false
+  }
+}
