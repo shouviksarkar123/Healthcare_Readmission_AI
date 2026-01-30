@@ -274,5 +274,5 @@ Future enhancements can further improve accuracy, scalability, and real-world ad
 - **Clinical Workflow Integration**: Embed predictions into hospital systems or care management tools for real-time discharge decision support.
 ---
 # Author: Shouvik Sarkar  
-Role: Aspiring Data Engineer / Data Scientist  
+Role: Data Engineer / Data Scientist  
 
