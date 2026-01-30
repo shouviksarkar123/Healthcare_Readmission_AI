@@ -46,7 +46,6 @@ Machine Learning is required to:
 - Adapt to complex, non-linear relationships
 #Dataset Description
 ---
-**আপনি যদি Diabetes 130-US Hospitals (1999–2008) ডেটাসেটের জন্য README ফাইল লিখতে চান, তাহলে এতে ডেটাসেটের উৎস, উদ্দেশ্য, বৈশিষ্ট্য, এবং ব্যবহার নির্দেশিকা থাকতে হবে। নিচে একটি কাঠামো দেওয়া হলো যা আপনি README ফাইলে ব্যবহার করতে পারেন।**
 
 ---
 
@@ -233,6 +232,7 @@ This approach bridges the gap between machine learning outputs and real-world cl
 
 
 #Orchestration
+
 The pipeline is automated using Databricks Jobs with task dependencies:
 Bronze → Silver → Gold → ML Training
 ---
