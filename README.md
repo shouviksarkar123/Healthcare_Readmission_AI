@@ -232,7 +232,6 @@ This approach bridges the gap between machine learning outputs and real-world cl
 
 
 #Orchestration
-
 The pipeline is automated using Databricks Jobs with task dependencies:
 Bronze → Silver → Gold → ML Training
 ---
@@ -251,6 +250,27 @@ This project satisfies all challenge requirements by:
 - Implementing ML with experiment tracking
 - Translating predictions into business actions
 - Delivering dashboards and documentation
+---
+# 🔮 Future Improvements 
+
+This project establishes a strong end-to-end foundation for hospital readmission risk prediction.  
+Future enhancements can further improve accuracy, scalability, and real-world adoption:
+
+- **Advanced Models**: Experiment with tree-based models (Random Forest, XGBoost) or ensemble methods to capture non-linear patient risk patterns.
+
+- **Feature Expansion**: Incorporate additional clinical signals such as lab trends, diagnosis history, and medication sequences for richer patient profiling.
+
+- **Time-Aware Modeling**: Move from static features to temporal models that account for patient history across multiple encounters.
+
+- **Threshold Optimization**: Tune decision thresholds based on hospital capacity, cost sensitivity, or patient risk tolerance.
+
+- **Model Explainability**: Integrate SHAP or feature attribution techniques to provide clinician-friendly explanations for predictions.
+
+- **Continuous Training**: Enable scheduled retraining using Databricks Jobs to keep the model updated with new data.
+
+- **Governance & Monitoring**: Add model drift detection, data quality checks, and audit logging for production-grade reliability.
+
+- **Clinical Workflow Integration**: Embed predictions into hospital systems or care management tools for real-time discharge decision support.
 ---
 # Author: Shouvik Sarkar  
 Role: Aspiring Data Engineer / Data Scientist  
