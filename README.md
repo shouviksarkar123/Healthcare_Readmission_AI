@@ -216,11 +216,12 @@ Healthcare_Readmission_AI
 ├── Dashboard
 
 └── README.md
+![Floder Structure](https://github.com/user-attachments/assets/bfef825e-a106-43fb-a392-767c7b563e06)
 
 ---
 # Model Evaluation
 The moderate AUC score reflects the inherent complexity and noise in real-world healthcare data, reinforcing the importance of combining ML outputs with domain-driven decision rules.
-<img width="1920" height="1080" alt="Screenshot (176)" src="https://github.com/user-attachments/assets/8e1710a9-248a-4fff-b3d5-4ca0adf2c36d" />
+![Experiments](https://github.com/user-attachments/assets/730da6b9-28ea-4ed6-b140-37ca257e0eca)
 
 
 *Results:*
@@ -245,6 +246,8 @@ This approach bridges the gap between machine learning outputs and real-world cl
 
 The pipeline is automated using Databricks Jobs with task dependencies:
 Bronze → Silver → Gold → ML Training
+![jobs  pipeline](https://github.com/user-attachments/assets/ee684813-aba5-43c0-af70-46d15f628435)
+
 
 ---
 
