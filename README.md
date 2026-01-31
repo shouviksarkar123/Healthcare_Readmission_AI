@@ -29,11 +29,11 @@ The presentation used in the walkthrough is available here: ( https://docs.googl
 🔗 **Healthcare Readmission AI – Interactive Dashboard:**  
 👉 <https://healthcare-readmission-app-fvdrqj4vgjnvdp2qxfjje7.streamlit.app/#healthcare-readmission-dashboard-analysis>
 ---
-
-> An executive-ready dashboard built on Databricks that visualizes patient readmission risk, utilization patterns, and clinical drivers to support proactive healthcare decisions.
+ An executive-ready dashboard built on Databricks that visualizes patient readmission risk, utilization patterns, and clinical drivers to support proactive healthcare decisions.
+---
 ---
 #Problem Statement
----
+
 Hospitals struggle to identify which patients are likely to be readmitted
 within 30 days after discharge.
 
@@ -161,7 +161,7 @@ Analytics Layer
 - Streamlit (Web deployment)
 ---
 # Feature Engineering Highlights
----
+
 Key engineered features include:
 - Age buckets for interpretability
 - Hospital utilization score combining visit counts
@@ -241,7 +241,7 @@ Risk buckets are derived using quantile-based thresholds on predicted readmissio
 
 This approach bridges the gap between machine learning outputs and real-world clinical decision-making, enabling healthcare teams to prioritize patients effectively rather than interpreting raw model scores.
 
-
+---
 #Orchestration
 
 The pipeline is automated using Databricks Jobs with task dependencies:
@@ -252,7 +252,7 @@ Bronze → Silver → Gold → ML Training
 ---
 
 #Challenge Requirements Compliance
----
+
 This project was developed as part of the Codebasics Resume Project Challenge, sponsored by Databricks and organised by Indian Data Club (IDC) and Codebasics.
 
 This project satisfies all challenge requirements by:
