@@ -1026,7 +1026,7 @@
               {
                 "name": "main_query",
                 "query": {
-                  "datasetName": "1daadd13",
+                  "datasetName": "a8b396c8",
                   "fields": [
                     {
                       "name": "readmit_30d",
@@ -1037,14 +1037,11 @@
                     "sets": [
                       {
                         "fieldNames": [
+                          "readmit_30d",
                           "readmit_30d"
                         ]
                       },
-                      {
-                        "fieldNames": [
-                          "readmit_30d"
-                        ]
-                      }
+                      {}
                     ]
                   },
                   "disaggregated": false,
@@ -1068,9 +1065,7 @@
                 "rows": [
                   {
                     "fieldName": "readmit_30d"
-                  }
-                ],
-                "columns": [
+                  },
                   {
                     "fieldName": "readmit_30d"
                   }
@@ -1086,7 +1081,7 @@
           "position": {
             "x": 2,
             "y": 0,
-            "width": 2,
+            "width": 3,
             "height": 3
           }
         }

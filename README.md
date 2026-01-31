@@ -23,8 +23,15 @@ Medallion Architecture, Delta Lake, MLflow, and SQL analytics.
 
 #📊 Presentation Deck
 -----
-The presentation used in the walkthrough is available here:
+The presentation used in the walkthrough is available here: ( https://docs.google.com/presentation/d/1tEoerKcLLAVYkV2i6tJSdwvKNGdOtniR/edit?usp=sharing&ouid=104979890987984862628&rtpof=true&sd=true )
 ----
+## 🚀 Live Dashboard Access
+🔗 **Healthcare Readmission AI – Interactive Dashboard:**  
+👉 <https://healthcare-readmission-app-fvdrqj4vgjnvdp2qxfjje7.streamlit.app/#healthcare-readmission-dashboard-analysis>
+---
+
+> An executive-ready dashboard built on Databricks that visualizes patient readmission risk, utilization patterns, and clinical drivers to support proactive healthcare decisions.
+---
 #Problem Statement
 ---
 Hospitals struggle to identify which patients are likely to be readmitted
@@ -45,7 +52,7 @@ Machine Learning is required to:
 - Generalize risk beyond fixed thresholds
 - Adapt to complex, non-linear relationships
 #Dataset Description
----
+
 
 ---
 
@@ -73,7 +80,7 @@ This is important because:
 
 ---
 
-## 📂 Files
+## 📂 Meta Data
 - **diabetic_data.csv (18.3 MB)** → Main dataset  
 - **IDS_mapping.csv (2.5 KB)** → Mapping of categorical IDs to descriptive values  
 
@@ -210,7 +217,8 @@ Healthcare_Readmission_AI
 
 └── README.md
 
-#Model Evaluation
+---
+# Model Evaluation
 The moderate AUC score reflects the inherent complexity and noise in real-world healthcare data, reinforcing the importance of combining ML outputs with domain-driven decision rules.
 
 *Results:*
@@ -235,10 +243,7 @@ This approach bridges the gap between machine learning outputs and real-world cl
 
 The pipeline is automated using Databricks Jobs with task dependencies:
 Bronze → Silver → Gold → ML Training
----
-# Deployment
-A lightweight Streamlit application is used to demonstrate how business users
-can consume model outputs outside Databricks.
+
 ---
 
 #Challenge Requirements Compliance
@@ -273,6 +278,16 @@ Future enhancements can further improve accuracy, scalability, and real-world ad
 
 - **Clinical Workflow Integration**: Embed predictions into hospital systems or care management tools for real-time discharge decision support.
 ---
-# Author: Shouvik Sarkar  
-Role: Data Engineer / Data Scientist  
 
+## 👤 Author & Project Owner
+
+**Shouvik Sarkar**  
+Aspiring Data Engineer | Data Scientist  
+Specialization: Healthcare Readmission AI, Databricks, ML Pipelines  
+
+🔗 **LinkedIn Profile:**  
+www.linkedin.com/in/shouvik-sarkar-619782279
+
+📩 Open to collaboration, feedback, and opportunities in Data Engineering & AI-driven Healthcare Analytics.
+
+---
