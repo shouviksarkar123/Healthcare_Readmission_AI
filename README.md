@@ -220,6 +220,8 @@ Healthcare_Readmission_AI
 ---
 # Model Evaluation
 The moderate AUC score reflects the inherent complexity and noise in real-world healthcare data, reinforcing the importance of combining ML outputs with domain-driven decision rules.
+<img width="1920" height="1080" alt="Screenshot (176)" src="https://github.com/user-attachments/assets/8e1710a9-248a-4fff-b3d5-4ca0adf2c36d" />
+
 
 *Results:*
 - ROC-AUC: ~0.60
