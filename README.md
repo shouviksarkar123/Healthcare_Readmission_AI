@@ -19,7 +19,7 @@ Medallion Architecture, Delta Lake, MLflow, and SQL analytics.
 
 #📽️ Project Walkthrough
 ---
-▶️ Video (10 mins, unlisted):
+▶️ Video (10 mins, unlisted): https://youtu.be/H9m4L_l98YE
 
 #📊 Presentation Deck
 -----
