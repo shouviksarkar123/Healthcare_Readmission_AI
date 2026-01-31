@@ -28,6 +28,10 @@ The presentation used in the walkthrough is available here: ( https://docs.googl
 ## 🚀 Live Dashboard Access
 🔗 **Healthcare Readmission AI – Interactive Dashboard:**  
 👉 <https://healthcare-readmission-app-fvdrqj4vgjnvdp2qxfjje7.streamlit.app/#healthcare-readmission-dashboard-analysis>
+![LIVE DASHBOARD](https://github.com/user-attachments/assets/468bd95c-20a1-496e-a330-14ad8162818c)
+![Live Dashboard view](https://github.com/user-attachments/assets/f079c1f0-173d-4718-843d-a3b9e65d92cb)
+
+
 ---
  An executive-ready dashboard built on Databricks that visualizes patient readmission risk, utilization patterns, and clinical drivers to support proactive healthcare decisions.
 ---
@@ -187,6 +191,8 @@ Databricks SQL dashboards provide:
 - Risk by age group
 - Relationship between utilization and readmission
 - Executive-level summary insights
+![WhatsApp Image 2026-01-31 at 20 33 33 (1)](https://github.com/user-attachments/assets/e4b1c7e0-e2ab-4929-a891-8c4b25f54a90)
+
 ---
 # Buisness Impact
 This system enables hospitals to:
